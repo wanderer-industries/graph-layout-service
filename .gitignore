@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.nyc_output/
+
+.env
+.env.*
+!.env.example
+
+*.log
+npm-debug.log*
+*.tsbuildinfo
+
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

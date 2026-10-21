@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wanderer.example/schemas/layout-request-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["nodes", "edges", "options"],
+  "properties": {
+    "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+    "edges": { "type": "array", "items": { "$ref": "#/$defs/edge" } },
+    "options": { "$ref": "#/$defs/options" }
+  },
+  "$defs": {
+    "point": { "type": "object", "additionalProperties": false, "required": ["x", "y"], "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+    "node": { "type": "object", "additionalProperties": false, "required": ["id", "name", "width", "height"], "properties": { "id": { "type": "string", "minLength": 1 }, "name": { "type": "string" }, "width": { "type": "number", "exclusiveMinimum": 0 }, "height": { "type": "number", "exclusiveMinimum": 0 }, "groupId": { "type": "string" }, "rank": { "type": "number" }, "previousPosition": { "$ref": "#/$defs/point" }, "pinned": { "type": "boolean" } } },
+    "edge": { "type": "object", "additionalProperties": false, "required": ["id", "source", "target"], "properties": { "id": { "type": "string", "minLength": 1 }, "source": { "type": "string", "minLength": 1 }, "target": { "type": "string", "minLength": 1 }, "weight": { "type": "number" }, "minRankSpan": { "type": "integer", "minimum": 1 } } },
+    "options": { "type": "object", "additionalProperties": false, "required": ["direction", "routing", "spacing", "ordering", "groups"], "properties": { "engine": { "enum": ["elk", "dagre"] }, "direction": { "enum": ["TB", "BT", "LR", "RL"] }, "routing": { "enum": ["straight", "polyline", "orthogonal", "spline"] }, "includeEdgeRoutes": { "type": "boolean" }, "spacing": { "type": "object", "additionalProperties": false, "required": ["nodeSpacing", "layerSpacing", "edgeSpacing"], "properties": { "nodeSpacing": { "type": "number", "minimum": 0 }, "layerSpacing": { "type": "number", "minimum": 0 }, "edgeSpacing": { "type": "number", "minimum": 0 } } }, "ordering": { "type": "object", "additionalProperties": false, "required": ["by", "direction", "locale", "policy"], "properties": { "by": { "enum": ["name", "id", "previous-order"] }, "direction": { "enum": ["asc", "desc"] }, "locale": { "type": "string", "minLength": 1 }, "policy": { "enum": ["strict", "prefer", "crossings-first"] } } }, "groups": { "enum": ["none", "compound"] }, "stability": { "type": "object", "additionalProperties": false, "properties": { "preservePreviousPositions": { "type": "boolean" } } } } }
+  }
+}

@@ -1,0 +1,6 @@
+[
+  { "name": "chain-small", "graphClass": "chain", "nodes": 100, "jobs": 20, "concurrency": 4 },
+  { "name": "chain-medium", "graphClass": "chain", "nodes": 500, "jobs": 10, "concurrency": 2 },
+  { "name": "tree-medium", "graphClass": "tree", "nodes": 500, "jobs": 10, "concurrency": 2 },
+  { "name": "sparse-large", "graphClass": "sparse", "nodes": 2000, "jobs": 5, "concurrency": 1 }
+]
