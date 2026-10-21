@@ -31,6 +31,28 @@ test('ELK direction translation places targets on the requested axis', async () 
   }
 });
 
+test('ELK centers a TB parent over its child span', async () => {
+  const request = structuredClone(SIMPLE_GRAPH);
+  request.options.direction = 'TB';
+  request.nodes = [
+    { id: 'root', name: 'Root', width: 130, height: 34, rank: 0 },
+    { id: 'left', name: 'Left', width: 130, height: 34, rank: 1 },
+    { id: 'right', name: 'Right', width: 130, height: 34, rank: 1 },
+  ];
+  request.edges = [
+    { id: 'root-left', source: 'root', target: 'left' },
+    { id: 'root-right', source: 'root', target: 'right' },
+  ];
+
+  const result = await new ElkLayoutEngine().layout(canonicalize(request));
+  const byId = new Map(result.nodes.map(node => [node.id, node]));
+  const rootCenter = nodeCenterX(byId.get('root')!);
+  const childCenters = [nodeCenterX(byId.get('left')!), nodeCenterX(byId.get('right')!)];
+  const childSpanCenter = (Math.min(...childCenters) + Math.max(...childCenters)) / 2;
+
+  assert.equal(rootCenter, childSpanCenter);
+});
+
 test('ELK golden fixture keeps normalized coordinates stable', async () => {
   const result = await new ElkLayoutEngine().layout(canonicalize(SIMPLE_GRAPH));
   assert.deepEqual(result.nodes, [
@@ -196,6 +218,10 @@ test('ELK honors explicit tree ranks in every direction', async () => {
 
 function stablePart(result: LayoutResult) {
   return { nodes: result.nodes, edges: result.edges, bounds: result.bounds, engine: result.engine, warnings: result.warnings };
+}
+
+function nodeCenterX(node: LayoutResult['nodes'][number]): number {
+  return node.x + node.width / 2;
 }
 
 function assertLayoutInvariants(result: LayoutResult, engine: LayoutEngine): void {
