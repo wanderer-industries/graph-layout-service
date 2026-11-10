@@ -62,7 +62,7 @@ function toElkGraph(request: LayoutRequest): ElkNode {
     'elk.layered.crossingMinimization.forceNodeModelOrder': String(options.ordering.policy === 'strict'),
     'elk.layered.nodePlacement.strategy': 'BRANDES_KOEPF',
     'elk.layered.nodePlacement.bk.fixedAlignment': 'BALANCED',
-    'elk.layered.nodePlacement.favorStraightEdges': 'false',
+    'elk.layered.nodePlacement.favorStraightEdges': 'true',
     'elk.hierarchyHandling': options.groups === 'compound' ? 'INCLUDE_CHILDREN' : 'INHERIT',
   };
   if (request.nodes.some(node => node.rank != null)) {
