@@ -1,7 +1,13 @@
 {
   "name": "graph-layout-service",
   "version": "0.1.0",
+  "description": "Deterministic HTTP graph layout service for Wanderer",
   "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wanderer-industries/graph-layout-service.git"
+  },
   "type": "module",
   "engines": {
     "node": ">=20"
